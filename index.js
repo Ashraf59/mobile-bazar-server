@@ -24,6 +24,8 @@ async function run (){
     try{
         const productsCollection = client.db('mobileBazar').collection('products');
         const categoryCollection = client.db('mobileBazar').collection('category');
+        const bookingsCollection = client.db('mobileBazar').collection('bookings');
+        const usersCollection = client.db('mobileBazar').collection('users');
 
         app.get('/products', async(req, res) =>{
             const query = {}
@@ -34,19 +36,33 @@ async function run (){
 
         app.get('/category/:name', async(req, res) => {
             const name = req.params.name;
-            console.log(name);
             const filter = {name}
             const result = await categoryCollection.find(filter).toArray();
-            res.send(result)
+            res.send(result);
         });
+
 
         app.get('/categories/:id', async(req, res) => {
             const id = req.params.id;
             const filter = {_id: ObjectId(id)}
-            const category = await categoryCollection.findOne(filter);
-            res.send(category)
+            const result = await categoryCollection.findOne(filter);
+            res.send(result);
+        });
 
-        })
+
+        app.post('/bookings', async (req, res) => {
+            const query = req.body
+            const result = await bookingsCollection.insertOne(query)
+            res.send(result)
+
+        });
+
+        app.post('/users', async (req, res) => {
+            const query = req.body
+            const result = await usersCollection.insertOne(query)
+            res.send(result)
+
+        });
     }
     finally{
 
