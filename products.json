@@ -1,0 +1,101 @@
+[
+    {
+        "category_id": "637f98ad345d495b77f37e85",
+        "model": "14 pro Max",
+        "name": "Iphone",
+        "resale_price": "750",
+        "original_price": "1,099",
+        "location": "Dhaka",
+        "use": "3",
+        "seller": "Joshim",
+        "image": "https://i.ibb.co/N7XBwMH/i-Phone-14-Pro-Max.jpg"
+    },
+    {
+        "category_id": "637f98ad345d495b77f37e85",
+        "model": "13 pro Max",
+        "name": "Iphone",
+        "resale_price": "700",
+        "orginal_price": "950",
+        "location": "Chittagong",
+        "use": "2",
+        "seller": "Rahim",
+        "image": "https://i.ibb.co/6gCnv26/Apple-i-Phone-13-Pro-Max.jpg"
+    },
+    {
+        "category_id": "637f98ad345d495b77f37e85",
+        "model": "12 pro max",
+        "name": "Iphone",
+        "resale_price": "650",
+        "original_price": "850",
+        "location": "Malibag",
+        "use": "2",
+        "seller": "Sumon",
+        "image": "https://i.ibb.co/BLxn7yV/iphone-12-pro-max.jpg"
+    },
+    {
+        "category_id": "637f98ad345d495b77f37e86",
+        "model": "Samsung Galaxy M32",
+        "name": "Samsung",
+        "resale_price": "200",
+        "oirginal_price": "300",
+        "location": "Gulsan",
+        "use": "4",
+        "seller": "Kader",
+        "image": "https://i.ibb.co/YZttSMC/Samsung-Galaxy-M32.jpg"
+    },
+    {
+        "category_id": "637f98ad345d495b77f37e86",
+        "model": "Samsung f22",
+        "name": "Samsung",
+        "resale_price": "120",
+        "oirginal_price": "200",
+        "location": "Mirpur",
+        "use": "2",
+        "seller": "Hasan",
+        "image": "https://i.ibb.co/GTLsvXj/samsung-f22.png"
+    },
+    {
+        "category_id": "637f98ad345d495b77f37e86",
+        "model": "Samsung s22",
+        "name": "Samsung",
+        "resale_price": "550",
+        "oirginal_price": "799",
+        "location": "Paltan",
+        "use": "1",
+        "seller": "Borhan",
+        "image": "https://i.ibb.co/WgrxCXS/samsung-s22.png"
+    },
+    {
+        "category_id": "637f98ad345d495b77f37e87",
+        "model": "Xiaomi 11i",
+        "name": "Xiaomi",
+        "resale_price": "170",
+        "oirginal_price": "249",
+        "location": "Mogbazar",
+        "use": "1",
+        "seller": "Rafique",
+        "image": "https://i.ibb.co/LNjP6Sn/Xiaomi-11i.jpg"
+    },
+    {
+        "category_id": "637f98ad345d495b77f37e87",
+        "model": "Xiaomi 12 Pro",
+        "name": "Xiaomi",
+        "resale_price": "500",
+        "oirginal_price": "650",
+        "location": "New Market",
+        "use": "1",
+        "seller": "Maruf",
+        "image": "https://i.ibb.co/D9kvJJp/xiaomi-12-pro.png"
+    },
+    {
+        "category_id": "637f98ad345d495b77f37e87",
+        "model": "Xiaomi mi 10",
+        "name": "Xiaomi",
+        "resale_price": "80",
+        "original_price": "126",
+        "location": "New Market",
+        "use": "1",
+        "seller": "Nijam",
+        "image": "https://i.ibb.co/jGjKdyX/xiaomi-10.jpg"
+    }
+]
