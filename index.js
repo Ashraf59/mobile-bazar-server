@@ -157,11 +157,16 @@ async function run (){
             res.send(result)
         })
 
-        app.get('/addproducts', async(req, res) => {
+        app.get('/myproducts', async(req, res) => {
             const query = {};
-            const addproducts = await addProductsCollection.find(query).toArray();
-            res.send(addproducts);
+            if(req.query.email){
+                query = {
+                    email: req.query.email
+                }
+            }
 
+            const result = await addProductsCollection.find(query).toArray();
+            res.send(result)
         })
     }
     finally{
