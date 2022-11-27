@@ -29,6 +29,7 @@ async function run (){
         const usersCollection = client.db('mobileBazar').collection('users');
         const addProductsCollection = client.db('mobileBazar').collection('addProducts');
         const paymentsCollection = client.db('mobileBazar').collection('payments');
+        const advertiseCollection = client.db('mobileBazar').collection('advertise');
 
         app.get('/products', async(req, res) =>{
             const query = {}
@@ -168,6 +169,29 @@ async function run (){
             const result = await addProductsCollection.find(query).toArray();
             res.send(result)
         })
+
+        app.post('/advertise', async (req, res) => {
+            const query = req.body;
+            const users = await advertiseCollection.insertOne(query)
+            res.send(users)
+        })
+
+        app.get('/advertise', async(req, res) => {
+            const query = {}
+            const advertise = await advertiseCollection.find(query).toArray();
+            res.send(advertise);
+        })
+
+        app.delete('/myProducts/:id', async(req, res) => {
+            const id = req.params.id;
+            const filter = {_id: ObjectId(id)}
+            const result = await addProductsCollection.deleteOne(filter);
+            res.send(result);
+        });
+
+
+
+
     }
     finally{
 
