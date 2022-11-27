@@ -67,7 +67,7 @@ async function run (){
             res.send(result)
         });
 
-        // create stripe payment method for mongodb database
+        // create stripe payment method for mongodb database.
         app.post('/create-payment-intent', async(req, res) => {
             const booking = req.body;
             const price = booking.price;
