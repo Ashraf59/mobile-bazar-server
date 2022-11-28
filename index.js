@@ -45,6 +45,12 @@ async function run (){
             res.send(result);
         });
 
+        app.get('/allcatagory', async (req, res) => {
+            const query = {}
+            const result = await categoryCollection.find(query).toArray()
+            res.send(result)
+        })
+
 
         app.get('/categories/:id', async(req, res) => {
             const id = req.params.id;
@@ -184,10 +190,10 @@ async function run (){
             res.send(users)
         })
 
-        app.get('/advertise', async(req, res) => {
+        app.get('/advertise', async (req, res) => {
             const query = {}
-            const advertise = await advertiseCollection.find(query).toArray();
-            res.send(advertise);
+            const result = await advertiseCollection.find(query).toArray()
+            res.send(result)
         })
 
         app.delete('/myProducts/:id', async(req, res) => {
