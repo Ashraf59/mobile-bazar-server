@@ -221,7 +221,7 @@ async function run (){
             res.send(result)
         })
 
-        app.get('/myproducts', verifyJWT, async(req, res) => {
+        app.get('/myproducts', async(req, res) => {
             let query = {};
             if(req.query.email){
                 query = {
@@ -245,7 +245,7 @@ async function run (){
             res.send(result)
         })
 
-        app.delete('/myProducts/:id', verifyJWT, async(req, res) => {
+        app.delete('/myProducts/:id', async(req, res) => {
             const id = req.params.id;
             const filter = {_id: ObjectId(id)}
             const result = await addProductsCollection.deleteOne(filter);
