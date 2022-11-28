@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors')
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 require('dotenv').config();
+const jwt = require('jsonwebtoken');
 const port = process.env.PORT || 5000;
 
 // Stripe secret key
@@ -18,7 +19,23 @@ const uri = `mongodb+srv://${process.env.USER_DB}:${process.env.USER_PASS}@clust
 // console.log(uri)
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 
+function verifyJWT(req, res, next) {
 
+    const authHeader = req.headers.authorization;
+    if (!authHeader) {
+        return res.status(401).send('unauthorized access');
+    }
+
+    const token = authHeader.split(' ')[1];
+
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, function (err, decoded) {
+        if (err) {
+            return res.status(403).send({ message: 'forbidden access' })
+        }
+        req.decoded = decoded;
+        next();
+    })
+}
 
 
 async function run (){
@@ -30,6 +47,18 @@ async function run (){
         const addProductsCollection = client.db('mobileBazar').collection('addProducts');
         const paymentsCollection = client.db('mobileBazar').collection('payments');
         const advertiseCollection = client.db('mobileBazar').collection('advertise');
+
+        const verifyAdmin = async(req, res, next ) => {
+            // console.log('inside verifyAdmin', req.decoded.email);
+            const decodedEmail = req.decoded.email;
+            const query = { email: decodedEmail };
+            const user = await usersCollection.findOne(query);
+
+            if (user?.role !== 'admin') {
+                return res.status(403).send({ message: 'forbidden access' })
+            }
+            next();
+        }
 
         app.get('/products', async(req, res) =>{
             const query = {}
@@ -65,6 +94,26 @@ async function run (){
             const result = await bookingsCollection.insertOne(query)
             res.send(result)
 
+        });
+
+        // read bookings on mongodb database
+        app.get('/bookings', verifyJWT, async(req, res) => {
+            const email = req.query.email;
+
+            // Step- 05 (jwt)
+            // console.log('token', req.headers.authorization);
+
+            // Step- 07 (jwt)
+            const decodedEmail = req.decoded.email;
+            // console.log(decodedEmail);
+
+            if(email !== decodedEmail){
+                return res.status(403).send({message: 'forbidden access'});
+            }
+
+            const query = {email: email}
+            const bookings = await bookingsCollection.find(query).toArray();
+            res.send(bookings);
         });
 
         app.get('/bookings/:id', async (req, res) => {
@@ -142,7 +191,7 @@ async function run (){
 
 
 
-        app.put('/users/admin/:id', async(req, res) => {
+        app.put('/users/admin/:id', verifyJWT, verifyAdmin, async(req, res) => {
             const id = req.params.id;
             const filter = { _id: ObjectId(id) }
             const options = { upsert: true };
@@ -172,7 +221,7 @@ async function run (){
             res.send(result)
         })
 
-        app.get('/myproducts', async(req, res) => {
+        app.get('/myproducts', verifyJWT, async(req, res) => {
             let query = {};
             if(req.query.email){
                 query = {
@@ -196,12 +245,27 @@ async function run (){
             res.send(result)
         })
 
-        app.delete('/myProducts/:id', async(req, res) => {
+        app.delete('/myProducts/:id', verifyJWT, async(req, res) => {
             const id = req.params.id;
             const filter = {_id: ObjectId(id)}
             const result = await addProductsCollection.deleteOne(filter);
             res.send(result);
         });
+
+        // Step- 02 (jwt)
+        app.get('/jwt', async(req, res) => {
+            const email = req.query.email;
+            const query = {email: email}
+            const user = await usersCollection.findOne(query);
+            if(user?.email){
+                const token = jwt.sign({email}, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '7d' });
+                return res.send({accessToken: token});
+            }
+            // console.log(user);
+            res.status(403).send({accessToken: ''})
+        });
+
+
 
 
 
